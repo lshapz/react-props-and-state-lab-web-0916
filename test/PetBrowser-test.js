@@ -11,6 +11,7 @@ const ADOPTED_PETS = [ALL_PETS[0].id];
 
 describe('<PetBrowser />', function () {
   it('should render Pet components based on its props', function () {
+    
     const wrapper = shallow(<PetBrowser pets={ALL_PETS} adoptedPets={ADOPTED_PETS} />);
     expect(wrapper.find(Pet).length).toEqual(ALL_PETS.length);
   });
@@ -28,6 +29,7 @@ describe('<PetBrowser />', function () {
 
   it('should determine the `isAdopted` prop for its children based on its `adoptedPets` prop', function () {
     const wrapper = shallow(<PetBrowser pets={ALL_PETS} adoptedPets={ADOPTED_PETS} />);
+     
     expect(wrapper.find(Pet).nodes[0].props.isAdopted).toBeTruthy();
     expect(wrapper.find(Pet).nodes.slice(1).every(node => node.props.isAdopted === false)).toBeTruthy();
   });
