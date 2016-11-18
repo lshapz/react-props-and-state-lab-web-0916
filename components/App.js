@@ -8,28 +8,40 @@ class App extends React.Component {
     super();
 
     this.state = {
-      pets: [],
-      adoptedPets: [],
+      pets: [], //passed as prop to PetBrowser and later Pet
+      adoptedPets: [], // passed as prop to PetBrowser and later Pet
       filters: {
-        type: 'all',
+        type: 'all', // passed as prop to Filter (mostly to make the select value look right)
       }
     };
+    //bind the below functions to the app instances rather than the app as a concept
+    //must use setState({}}) to force rerender!!!!
 
     this.handleChangeFilterType = this.handleChangeFilterType.bind(this);
+    //used for filter dropdown menu (state: {filters: {type: ''}})
+    // passed as prop to filters 
+
     this.fetchPets = this.fetchPets.bind(this);
+    //used for API call (state: {pets: []})
+    // passed as prop to filters 
+
     this.handleAdoptPet = this.handleAdoptPet.bind(this);
+    //used for pet adoption click (state: {adoptedPets: []})
+    // passed as prop to PetBrowser and later Pet 
   }
 
   fetchPets() {
     let url = '/api/pets';
-
+    //goes to fake api
     if (this.state.filters.type !== 'all') {
       url += `?type=${this.state.filters.type}`;
-    }
+    } 
+    //makes sure we get the requested pet type from the API
 
     fetch(url)
       .then(res => res.json())
       .then(pets => this.setState({ pets }));
+    //fetch url, parse json, at last sets the state
   }
 
   handleChangeFilterType(type) {
@@ -38,12 +50,15 @@ class App extends React.Component {
         type: type,
       })
     });
+    //filters out pets of non-micropig type or whatever
   }
 
   handleAdoptPet(petId) {
     this.setState({
       adoptedPets: [...this.state.adoptedPets, petId],
     });
+
+    // pushes the selected pet into the adopted pets array 
   }
 
   render() {
@@ -57,7 +72,7 @@ class App extends React.Component {
             <div className="four wide column">
               <Filters filters={this.state.filters}
                        onChangeType={this.handleChangeFilterType}
-                       onFindPetsClick={this.fetchPets}
+                       onFindPetsClick={this.fetchPets} 
               />
             </div>
             <div className="twelve wide column">

@@ -5,10 +5,16 @@ class Filters extends React.Component {
     super();
 
     this.handleFilterTypeChange = this.handleFilterTypeChange.bind(this);
+    //binds the function to the filter instance 
+    //this.props.onFindPetsClick was passed from App, doesn't need to be bound 
+      //beause the API call seems to always happen in the App not the filter?? 
   }
 
-  handleFilterTypeChange(ev) {
-    this.props.onChangeType(ev.target.value);
+  handleFilterTypeChange(event) {
+    this.props.onChangeType(event.target.value);
+    // is a call to App function handleChangeFilterType which changes App state
+      //need to change the app state to force the rerender to determine who to display  
+
   }
 
   render() {
